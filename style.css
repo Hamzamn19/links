@@ -1,0 +1,113 @@
+:root{
+  --bg-1: #0f1724;
+  --bg-2: #1b2430;
+  --accent-1: #7dd3fc;
+  --accent-2: #a78bfa;
+  --accent-3: #fb7185;
+  --muted: #bfc7cf;
+  --card-bg: rgba(255,255,255,0.03);
+  --card-glass: rgba(255,255,255,0.04);
+  --radius: 16px;
+  --glow-blur: 14px;
+  --glow-speed: 25s;
+  --card-padding: 16px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:"Cairo",sans-serif;-webkit-font-smoothing:antialiased;}
+body{
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+  background: linear-gradient(135deg,var(--bg-1),var(--bg-2));
+  color:#fff;overflow-x:hidden;
+}
+
+body::before{
+  content:"";position:fixed;inset:-20%;z-index:-3;
+  background: radial-gradient(500px 300px at 10% 20%, rgba(127,90,240,0.07), transparent),
+             radial-gradient(600px 350px at 90% 80%, rgba(59,130,246,0.06), transparent);
+  background-blend-mode: screen;
+  filter: blur(12px) saturate(110%);
+  animation: bgShift 60s linear infinite;
+  opacity:.9;
+}
+@keyframes bgShift{
+  0%{transform:rotate(0) scale(1);}
+  50%{transform:rotate(4deg) scale(1.01);}
+  100%{transform:rotate(0) scale(1);}
+}
+
+.wrap{
+  width:100%;max-width:720px;
+  border-radius:calc(var(--radius) + 4px);
+  padding:var(--card-padding);
+  background:rgba(255,255,255,0.02);
+  box-shadow:0 8px 28px rgba(2,6,23,0.6);
+  border:1px solid rgba(255,255,255,0.04);
+  backdrop-filter:blur(6px) saturate(140%);
+  animation:cardIn .5s ease forwards;
+  opacity:0;transform:translateY(8px);
+}
+@keyframes cardIn{to{opacity:1;transform:none}}
+
+header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+.logo{width:60px;height:60px;border-radius:14px;
+  background:linear-gradient(135deg,var(--accent-2),var(--accent-1));
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;font-weight:700;color:#0b1220;
+}
+h1{margin:0;font-size:20px;font-weight:700;line-height:1.1;}
+.title h1{background:linear-gradient(90deg,#fff,var(--accent-2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+p.lead{margin:4px 0 0;color:var(--muted);font-size:13px;}
+
+.links{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px;}
+@media(min-width:560px){.links{grid-template-columns:1fr 1fr;}}
+
+a.btn{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;color:inherit;
+  padding:10px 12px;border-radius:12px;
+  font-weight:600;position:relative;
+  background:linear-gradient(180deg,var(--card-bg),var(--card-glass));
+  border:1px solid rgba(255,255,255,0.03);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+a.btn:focus{box-shadow:0 0 0 3px rgba(124,58,237,.2);}
+a.btn::before{
+  content:"";position:absolute;inset:-4px;z-index:-2;
+  border-radius:14px;
+  background:linear-gradient(90deg,rgba(167,139,250,.25),rgba(123,211,252,.25),rgba(251,113,133,.25));
+  background-size:300% 300%;
+  filter:blur(var(--glow-blur));
+  opacity:.8;animation:glowMove var(--glow-speed) linear infinite;
+}
+a.btn::after{content:"";position:absolute;inset:0;z-index:-1;
+  border-radius:12px;background:rgba(0,0,0,.15);}
+@keyframes glowMove{
+  0%{background-position:0 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0 50%}
+}
+a.btn:hover{transform:translateY(-4px);box-shadow:0 12px 24px rgba(0,0,0,.4);}
+.icon{width:40px;height:40px;min-width:40px;
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.05);font-size:16px;color:var(--accent-1);}
+.meta{text-align:right;flex:1;}
+.label{font-size:14px;color:#fff;display:block;}
+.sub{font-size:11px;color:var(--muted);margin-top:2px;display:block;}
+
+.btn.primary{background:linear-gradient(90deg,rgba(180,194,211,.1),rgba(224,232,242,.05));}
+.btn.primary .icon{background:linear-gradient(180deg,var(--accent-1),var(--accent-2));color:#081023;}
+
+.footer{margin-top:14px;text-align:center;color:var(--muted);font-size:12px;}
+
+/* هواتف: تقليل الثقل */
+@media(max-width:768px){
+  body::before{animation:none;filter:blur(8px);}
+  .wrap{padding:12px;}
+  .icon{width:36px;height:36px;}
+  .label{font-size:13px;}
+  .sub{font-size:11px;}
+  a.btn:hover{transform:none;box-shadow:none;}
+}
